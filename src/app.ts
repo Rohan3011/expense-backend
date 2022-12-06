@@ -1,5 +1,6 @@
 require("dotenv").config();
 import express from "express";
+import cors from "cors";
 import config from "config";
 import { connectToDB } from "../utils/db";
 import log from "../utils/logger";
@@ -8,6 +9,11 @@ import deserializeUser from "./middleware/deserializeUser";
 
 const app = express();
 
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 

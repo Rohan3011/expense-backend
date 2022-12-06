@@ -3,7 +3,7 @@ import HttpStatusCode from "../../utils/HttpStatusCode";
 import { CreateUserInput } from "../schema/user.schema";
 import { createUser } from "../services/user.service";
 
-const UNIQUE_CONSTRAIN_VIOLATED = 110000;
+const UNIQUE_CONSTRAIN_VIOLATED = 11000;
 
 /**
  * @desc create User
@@ -20,9 +20,10 @@ export async function createUserHandler(
     return res.send("User successfully created");
   } catch (e: any) {
     if (e.code === UNIQUE_CONSTRAIN_VIOLATED) {
-      res.send(HttpStatusCode.CONFLICT).send("User already exists!");
+      res.status(HttpStatusCode.CONFLICT).send("User already exists!");
+    } else {
+      res.send(HttpStatusCode.INTERNAL_SERVER_ERROR).send(e);
     }
-    res.send(HttpStatusCode.INTERNAL_SERVER_ERROR).send(e);
   }
 }
 

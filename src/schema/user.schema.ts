@@ -3,11 +3,8 @@ import { z } from "zod";
 export const createUserSchema = z.object({
   body: z
     .object({
-      firstName: z.string({
+      name: z.string({
         required_error: "First Name is required",
-      }),
-      lastName: z.string({
-        required_error: "Last Name is required",
       }),
       password: z
         .string({

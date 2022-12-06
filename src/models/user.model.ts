@@ -30,10 +30,7 @@ export class User {
   email: string;
 
   @prop({ required: true })
-  firstName: string;
-
-  @prop({ required: true })
-  lastName: string;
+  name: string;
 
   @prop({ required: true })
   password: string;

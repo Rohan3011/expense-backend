@@ -11,7 +11,7 @@ router.get("/healthcheck", (_, res) => {
   res.sendStatus(HttpStatusCode.OK);
 });
 
-router.use("/auth", auth);
+router.use("/sessions", auth);
 router.use("/users", user);
 router.use("/incomes", income);
 router.use("/expenses", expense);

@@ -1,5 +1,7 @@
 export default {
-  port: process.env.PORT,
-  mongoURI: process.env.MONGO_URI,
+  port: 5000,
+  mongoURI: "",
   logLevel: 2,
+  accessTokenPrivateKey: "",
+  refreshTokenPrivateKey: "",
 };

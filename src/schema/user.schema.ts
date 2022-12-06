@@ -29,4 +29,4 @@ export const createUserSchema = z.object({
     }),
 });
 
-export type createUserInput = z.TypeOf<typeof createUserSchema>["body"];
+export type CreateUserInput = z.TypeOf<typeof createUserSchema>["body"];

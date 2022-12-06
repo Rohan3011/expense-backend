@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import HttpStatusCode from "../../utils/HttpStatusCode";
-import { createUserInput } from "../schema/user.schema";
+import { CreateUserInput } from "../schema/user.schema";
 import { createUser } from "../services/user.service";
 
 const UNIQUE_CONSTRAIN_VIOLATED = 110000;
@@ -11,7 +11,7 @@ const UNIQUE_CONSTRAIN_VIOLATED = 110000;
  * @access Private
  */
 export async function createUserHandler(
-  req: Request<{}, {}, createUserInput>,
+  req: Request<{}, {}, CreateUserInput>,
   res: Response
 ) {
   const body = req.body;

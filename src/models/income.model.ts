@@ -1,4 +1,9 @@
-import { getModelForClass, modelOptions, prop } from "@typegoose/typegoose";
+import {
+  getModelForClass,
+  modelOptions,
+  prop,
+  Severity,
+} from "@typegoose/typegoose";
 
 export class IncomeSource {
   @prop({ required: true })
@@ -25,6 +30,9 @@ export class IncomeTags {
 @modelOptions({
   schemaOptions: {
     timestamps: true,
+  },
+  options: {
+    allowMixed: Severity.ALLOW,
   },
 })
 export class Income {

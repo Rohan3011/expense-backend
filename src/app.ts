@@ -3,8 +3,8 @@ import express from "express";
 import config from "config";
 import { connectToDB } from "../utils/db";
 import log from "../utils/logger";
-import HttpStatusCode from "../utils/HttpStatusCode";
 import router from "./routes";
+import deserializeUser from "./middleware/deserializeUser";
 
 const app = express();
 
@@ -12,9 +12,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.get("/", (_, res) => {
-  res.status(HttpStatusCode.OK).send("Welcome to Expense Tracker API");
+  res.send("Welcome to Expense Tracker API");
 });
 
+app.use(deserializeUser);
 app.use("/api", router);
 
 const port = config.get("port");

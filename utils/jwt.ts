@@ -18,7 +18,7 @@ export function signJwt(
 }
 
 export function verifyJwt<T>(
-  token: string,
+  token: any,
   keyName: "accessTokenPublicKey" | "refreshTokenPublicKey"
 ): T | null {
   const publicKey = Buffer.from(config.get<string>(keyName), "base64").toString(

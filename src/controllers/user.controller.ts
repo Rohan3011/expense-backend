@@ -25,3 +25,7 @@ export async function createUserHandler(
     res.send(HttpStatusCode.INTERNAL_SERVER_ERROR).send(e);
   }
 }
+
+export async function getCurrentUserHandler(req: Request, res: Response) {
+  return res.send(res.locals.user); // deserialize Middleware
+}

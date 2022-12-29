@@ -17,10 +17,12 @@ export async function createUserHandler(
   const body = req.body;
   try {
     const user = await createUser(body);
-    return res.send("User successfully created");
+    return res.send({ message: "User successfully created" });
   } catch (e: any) {
     if (e.code === UNIQUE_CONSTRAIN_VIOLATED) {
-      res.status(HttpStatusCode.CONFLICT).send("User already exists!");
+      res
+        .status(HttpStatusCode.CONFLICT)
+        .send({ message: "User already exists!" });
     } else {
       res.send(HttpStatusCode.INTERNAL_SERVER_ERROR).send(e);
     }

@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
     "start": "nodemon src/app.ts",
-    "start:prod": "npm run build && node ./dist/src/server.js",
-    "build": "npx tsc",
+    "start:prod": "yarn run build && node .dist/src/app.js",
+    "build": "npx tsc --outDir .dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

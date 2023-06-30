@@ -9,9 +9,11 @@ import cookieJwtAuth from "./middleware/cookieJwtAuth";
 
 const app = express();
 
+const clientURL = process.env.CLIENT_URL;
+
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: clientURL,
     credentials: true,
     optionsSuccessStatus: 200,
   })

@@ -5,7 +5,7 @@ import SessionModel from "../models/session.model";
 import { privateFields, User } from "../models/user.model";
 
 export function createSession({ userId }: { userId: string }) {
-  return SessionModel.create({ user: userId });
+  return SessionModel.create({ user_id: userId });
 }
 
 export function findSessionById(id: string) {

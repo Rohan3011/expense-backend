@@ -10,33 +10,42 @@ import {
 } from "../services/auth.service";
 import { findUserByEmail, findUserById } from "../services/user.service";
 
+const EXPIRES_IN_30_DAYS = 25892000000;
+
 export async function createSessionHandler(
   req: Request<{}, {}, createSessionInput>,
   res: Response
 ) {
-  const message = "Invalid email or password";
   const { email, password } = req.body;
 
   const user = await findUserByEmail(email);
   if (!user) {
-    return res.status(HttpStatusCode.UNAUTHORIZED).send(message);
+    return res
+      .status(HttpStatusCode.UNAUTHORIZED)
+      .send({ error: "Invalid email or password" });
   }
 
   const isValid = await user.validatePassword(password);
 
   if (!isValid) {
-    res.send(message);
+    return res.send({ error: "Invalid email or password" });
   }
 
   // sign an access token
   const accessToken = signAccessToken(user);
   // sign a refresh token
   const refreshToken = await signRefreshToken({ userId: user._id });
-  // send the tokens
-  res.send({
-    accessToken,
-    refreshToken,
-  });
+  // cookie
+  res
+    .cookie(
+      "token",
+      { accessToken, refreshToken },
+      { expires: new Date(Date.now() + EXPIRES_IN_30_DAYS), httpOnly: true }
+    )
+    .send({
+      success: "User logged in successfully",
+      tokens: { accessToken, refreshToken },
+    });
 }
 
 export async function refreshAccessTokenHandler(req: Request, res: Response) {

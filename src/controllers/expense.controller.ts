@@ -19,8 +19,13 @@ import {
  * @access Private
  */
 export async function getExpensesHandler(req: Request, res: Response) {
-  const expenses = await getExpenses();
-  return res.status(HttpStatusCode.OK).json(expenses);
+  const user = res.locals.user;
+  try {
+    const expenses = await getExpenses({ userId: user._id });
+    return res.status(HttpStatusCode.OK).json(expenses);
+  } catch (e) {
+    res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send(e);
+  }
 }
 
 /**
@@ -33,11 +38,12 @@ export async function getExpenseHandler(
   res: Response
 ) {
   const params = req.params;
+  const user = res.locals.user;
   try {
-    const expense = await getExpense(params);
+    const expense = await getExpense(params, { userId: user._id });
     return res.send(expense);
   } catch (e: any) {
-    res.send(HttpStatusCode.INTERNAL_SERVER_ERROR).send(e);
+    res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send(e);
   }
 }
 
@@ -51,11 +57,14 @@ export async function createExpenseHandler(
   res: Response
 ) {
   const body = req.body;
+  const user = res.locals.user;
+
   try {
-    const user = await createExpense(body);
-    return res.send("Expense added successfully");
+    const resp = await createExpense({ userId: user._id, ...body });
+    console.log(resp);
+    return res.send({ success: "Expense added successfully" });
   } catch (e: any) {
-    res.send(HttpStatusCode.INTERNAL_SERVER_ERROR).send(e);
+    res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send(e);
   }
 }
 
@@ -69,14 +78,16 @@ export async function updateExpenseHandler(
   res: Response
 ) {
   const { params, body } = req;
+  const user = res.locals.user;
+
   try {
-    const expense = await updateExpense(params, body);
+    const expense = await updateExpense(params, body, { userId: user._id });
     return res.send({
       message: `Expense: ${params.id} updated successfully`,
       expense,
     });
   } catch (e: any) {
-    res.send(HttpStatusCode.INTERNAL_SERVER_ERROR).send(e);
+    res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send(e);
   }
 }
 
@@ -90,13 +101,14 @@ export async function deleteExpenseHandler(
   res: Response
 ) {
   const params = req.params;
+  const user = res.locals.user;
   try {
-    const expense = await deleteExpense(params);
+    const expense = await deleteExpense(params, { userId: user._id });
     return res.send({
       message: `Expense: ${params.id} successfully deleted`,
       expense,
     });
   } catch (e: any) {
-    res.send(HttpStatusCode.INTERNAL_SERVER_ERROR).send(e);
+    res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send(e);
   }
 }

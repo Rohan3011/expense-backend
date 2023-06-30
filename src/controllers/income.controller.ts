@@ -19,8 +19,18 @@ import {
  * @access Private
  */
 export async function getIncomesHandler(req: Request, res: Response) {
-  const incomes = await getIncomes();
-  return res.status(HttpStatusCode.OK).json(incomes);
+  const user = res.locals.user;
+  try {
+    if (!user) {
+      return res
+        .status(HttpStatusCode.FORBIDDEN)
+        .send({ error: "User doesn't exits, please login!" });
+    }
+    const incomes = await getIncomes({ userId: user._id });
+    return res.status(HttpStatusCode.OK).json(incomes);
+  } catch (e) {
+    res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send(e);
+  }
 }
 
 /**
@@ -33,11 +43,18 @@ export async function getIncomeHandler(
   res: Response
 ) {
   const params = req.params;
+  const user = res.locals.user;
+
   try {
-    const income = await getIncome(params);
+    if (!user) {
+      return res
+        .status(HttpStatusCode.FORBIDDEN)
+        .send({ error: "User doesn't exits, please login!" });
+    }
+    const income = await getIncome(params, { userId: user._id });
     return res.send(income);
   } catch (e: any) {
-    res.send(HttpStatusCode.INTERNAL_SERVER_ERROR).send(e);
+    res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send(e);
   }
 }
 
@@ -51,11 +68,18 @@ export async function createIncomeHandler(
   res: Response
 ) {
   const body = req.body;
+  const user = res.locals.user;
+
   try {
-    const user = await createIncome(body);
-    return res.send("Income added successfully");
+    if (!user) {
+      return res
+        .status(HttpStatusCode.FORBIDDEN)
+        .send({ error: "User doesn't exits, please login!" });
+    }
+    const resp = await createIncome({ userId: user._id, ...body });
+    return res.send({ success: "Income added successfully" });
   } catch (e: any) {
-    res.send(HttpStatusCode.INTERNAL_SERVER_ERROR).send(e);
+    res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send(e);
   }
 }
 
@@ -69,14 +93,21 @@ export async function updateIncomeHandler(
   res: Response
 ) {
   const { params, body } = req;
+  const user = res.locals.user;
+
   try {
-    const income = await updateIncome(params, body);
+    if (!user) {
+      return res
+        .status(HttpStatusCode.FORBIDDEN)
+        .send({ error: "User doesn't exits, please login!" });
+    }
+    const income = await updateIncome(params, body, { userId: user._id });
     return res.send({
       message: `Income: ${params.id} updated successfully`,
       income,
     });
   } catch (e: any) {
-    res.send(HttpStatusCode.INTERNAL_SERVER_ERROR).send(e);
+    res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send(e);
   }
 }
 
@@ -90,13 +121,20 @@ export async function deleteIncomeHandler(
   res: Response
 ) {
   const params = req.params;
+  const user = res.locals.user;
+
   try {
-    const income = await deleteIncome(params);
+    if (!user) {
+      return res
+        .status(HttpStatusCode.FORBIDDEN)
+        .send({ error: "User doesn't exits, please login!" });
+    }
+    const income = await deleteIncome(params, { userId: user._id });
     return res.send({
       message: `Income: ${params.id} successfully deleted`,
       income,
     });
   } catch (e: any) {
-    res.send(HttpStatusCode.INTERNAL_SERVER_ERROR).send(e);
+    res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send(e);
   }
 }

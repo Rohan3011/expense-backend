@@ -2,8 +2,10 @@ import {
   getModelForClass,
   modelOptions,
   prop,
+  Ref,
   Severity,
 } from "@typegoose/typegoose";
+import { User } from "./user.model";
 
 export class ExpenseSource {
   @prop({ required: true })
@@ -36,6 +38,9 @@ export class ExpenseTags {
   },
 })
 export class Expense {
+  @prop({ ref: () => User })
+  userId: Ref<User>;
+
   @prop({ required: true })
   amount: number;
 
@@ -43,10 +48,10 @@ export class Expense {
   date: Date;
 
   @prop({ required: true })
-  source: ExpenseSource[];
+  source: string;
 
   @prop({ required: true })
-  tags: ExpenseTags[];
+  tags: string[];
 
   @prop()
   note?: string;

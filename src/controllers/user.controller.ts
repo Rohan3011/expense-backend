@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import HttpStatusCode from "../../utils/HttpStatusCode";
-import { CreateUserInput } from "../schema/user.schema";
-import { createUser } from "../services/user.service";
+import { CreateUserInput, UpdateUserInput } from "../schema/user.schema";
+import { createUser, updateUserOnboarding } from "../services/user.service";
 
 const UNIQUE_CONSTRAIN_VIOLATED = 11000;
 
@@ -24,8 +24,31 @@ export async function createUserHandler(
         .status(HttpStatusCode.CONFLICT)
         .send({ message: "User already exists!" });
     } else {
-      res.send(HttpStatusCode.INTERNAL_SERVER_ERROR).send(e);
+      res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send(e);
     }
+  }
+}
+
+/**
+ * @desc update User
+ * @route PUT /api/users/onboarding
+ * @access Private
+ */
+export async function updateUserHandler(
+  req: Request<{}, {}, UpdateUserInput>,
+  res: Response
+) {
+  const { body } = req;
+  const user = res.locals.user;
+
+  try {
+    const resp = await updateUserOnboarding(user._id, body);
+    return res.send({
+      success: `User updated successfully`,
+      user: resp,
+    });
+  } catch (e: any) {
+    res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send(e);
   }
 }
 

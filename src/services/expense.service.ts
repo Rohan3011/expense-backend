@@ -5,21 +5,28 @@ export function createExpense(input: Partial<Expense>) {
   return ExpenseModel.create(input);
 }
 
-export function getExpenses() {
-  return ExpenseModel.find();
+export function getExpenses({ userId }: { userId: string }) {
+  return ExpenseModel.find({ userId });
 }
 
-export function getExpense(params: modifyExpenseParams) {
-  return ExpenseModel.findById(params.id);
+export function getExpense(
+  params: modifyExpenseParams,
+  { userId }: { userId: string }
+) {
+  return ExpenseModel.findOne({ _id: params.id, userId });
 }
 
 export function updateExpense(
   params: modifyExpenseParams,
-  input: Partial<Expense>
+  input: Partial<Expense>,
+  { userId }: { userId: string }
 ) {
   return ExpenseModel.findByIdAndUpdate(params.id, input);
 }
 
-export function deleteExpense(params: modifyExpenseParams) {
+export function deleteExpense(
+  params: modifyExpenseParams,
+  { userId }: { userId: string }
+) {
   return ExpenseModel.findByIdAndRemove(params.id);
 }

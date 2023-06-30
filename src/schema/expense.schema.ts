@@ -23,13 +23,10 @@ const dateSchema = z.preprocess(
 );
 
 export const expenseBodySchema = z.object({
-  amount: z.number({
-    required_error: "Amount is required",
-    invalid_type_error: "Amount must be a number",
-  }),
+  amount: z.number(),
   date: dateSchema,
-  source: z.array(createSourceSchema),
-  tags: z.array(createTagSchema),
+  source: z.string(),
+  tags: z.array(z.string()),
   note: z.string().optional(),
 });
 
@@ -41,8 +38,8 @@ export const expenseBodyOptionalSchema = z.object({
     })
     .optional(),
   date: dateSchema.optional(),
-  source: z.array(createSourceSchema).optional(),
-  tags: z.array(createTagSchema).optional(),
+  source: z.string().optional(),
+  tags: z.array(z.string()).optional(),
   note: z.string().optional(),
 });
 

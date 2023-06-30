@@ -5,7 +5,9 @@ async function requireUser(req: Request, res: Response, next: NextFunction) {
   const user = res.locals.user;
 
   if (!user) {
-    return res.sendStatus(HttpStatusCode.FORBIDDEN);
+    return res
+      .status(HttpStatusCode.FORBIDDEN)
+      .send({ error: "User doesn't exits, please login!" });
   }
 
   return next();

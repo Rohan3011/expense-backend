@@ -19,6 +19,7 @@ export const createUserSchema = z.object({
           required_error: "Email is required",
         })
         .email("Not a valid email"),
+      onboarding: z.boolean().optional().default(false),
     })
     .refine((data) => data.password === data.passwordConfirmation, {
       message: "Passwords do not match",
@@ -27,3 +28,4 @@ export const createUserSchema = z.object({
 });
 
 export type CreateUserInput = z.TypeOf<typeof createUserSchema>["body"];
+export type UpdateUserInput = Pick<CreateUserInput, "onboarding">;

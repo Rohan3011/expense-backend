@@ -14,8 +14,9 @@ const clientURL = process.env.CLIENT_URL;
 app.use(
   cors({
     origin: clientURL,
+    methods: ["GET", "OPTIONS", "PATCH", "DELETE", "POST", "PUT"],
     credentials: true,
-    optionsSuccessStatus: 200,
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 app.use(express.json());

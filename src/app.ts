@@ -6,6 +6,7 @@ import log from "../utils/logger";
 import router from "./routes";
 import deserializeUser from "./middleware/deserializeUser";
 import cookieJwtAuth from "./middleware/cookieJwtAuth";
+import allowCors from "./middleware/allowCors";
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+app.use(allowCors);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 

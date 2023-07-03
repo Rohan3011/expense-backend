@@ -4,7 +4,7 @@ const clientURL = process.env.CLIENT_URL;
 
 const allowCors = (req: Request, res: Response, next: NextFunction) => {
   res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Allow-Origin", clientURL!);
+  res.setHeader("Access-Control-Allow-Origin", "*");
   // another common pattern
   // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
   res.setHeader(

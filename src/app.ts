@@ -10,12 +10,9 @@ import allowCors from "./middleware/allowCors";
 
 const app = express();
 
-const clientURL = process.env.CLIENT_URL;
-
 app.use(
   cors({
-    origin: clientURL,
-    methods: ["GET", "OPTIONS", "PATCH", "DELETE", "POST", "PUT"],
+    origin: "*",
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
   })

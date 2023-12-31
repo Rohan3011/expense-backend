@@ -10,6 +10,11 @@ import swaggerDocs from "./utils/swagger";
 
 const app = express();
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL);
+  next();
+});
+
 app.use(
   cors({
     origin: process.env.CLIENT_URL,

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { AnyZodObject } from "zod";
-import HttpStatusCode from "../../utils/HttpStatusCode";
+import HttpStatusCode from "../utils/HttpStatusCode";
 
 /**
  * @middleware Validates incoming Request against the defined schemas

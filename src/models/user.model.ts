@@ -7,7 +7,7 @@ import {
   prop,
 } from "@typegoose/typegoose";
 import argon2 from "argon2";
-import log from "../../utils/logger";
+import log from "../utils/logger";
 
 export const privateFields = ["password", "__v"];
 

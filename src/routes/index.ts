@@ -4,10 +4,20 @@ import user from "./user.routes";
 import income from "./income.routes";
 import expense from "./expense.routes";
 import balance from "./balance.routes";
-import HttpStatusCode from "../../utils/HttpStatusCode";
+import HttpStatusCode from "../utils/HttpStatusCode";
 
 const router = express.Router();
 
+/**
+ * @openapi
+ * /health:
+ * get:
+ *  tag:
+ *    - health
+ *  response:
+ *    '200':
+ *      description: Ok
+ */
 router.get("/health", (_, res) => {
   res.sendStatus(HttpStatusCode.OK);
 });

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import HttpStatusCode from "../../utils/HttpStatusCode";
+import HttpStatusCode from "../utils/HttpStatusCode";
 import {
   createBalanceInput,
   modifyBalanceParams,

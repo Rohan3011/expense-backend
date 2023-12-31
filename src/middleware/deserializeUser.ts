@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import HttpStatusCode from "../../utils/HttpStatusCode";
-import { verifyJwt } from "../../utils/jwt";
+import HttpStatusCode from "../utils/HttpStatusCode";
+import { verifyJwt } from "../utils/jwt";
 
 async function deserializeUser(
   req: Request,

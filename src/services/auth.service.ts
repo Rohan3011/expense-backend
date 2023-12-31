@@ -1,6 +1,6 @@
 import { DocumentType } from "@typegoose/typegoose";
 import { omit } from "lodash";
-import { signJwt } from "../../utils/jwt";
+import { signJwt } from "../utils/jwt";
 import SessionModel from "../models/session.model";
 import { privateFields, User } from "../models/user.model";
 

@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import "dotenv/config";
+import log from "./logger";
 
 export function signJwt(
   obj: Object,
@@ -7,7 +8,6 @@ export function signJwt(
   options?: jwt.SignOptions | undefined
 ) {
   const signingKey = Buffer.from(getENV(keyName), "base64").toString("ascii");
-
   return jwt.sign(obj, signingKey, {
     ...(options && options),
     algorithm: "RS256",

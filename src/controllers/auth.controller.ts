@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { get } from "lodash";
-import HttpStatusCode from "../../utils/HttpStatusCode";
-import { verifyJwt } from "../../utils/jwt";
+import HttpStatusCode from "../utils/HttpStatusCode";
+import { verifyJwt } from "../utils/jwt";
 import { createSessionInput } from "../schema/auth.schema";
 import {
   findSessionById,

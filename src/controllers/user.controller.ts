@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import HttpStatusCode from "../../utils/HttpStatusCode";
+import HttpStatusCode from "../utils/HttpStatusCode";
 import { CreateUserInput, UpdateUserInput } from "../schema/user.schema";
 import { createUser, updateUserOnboarding } from "../services/user.service";
 

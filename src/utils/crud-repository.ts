@@ -8,11 +8,11 @@ class CrudRepository<T extends Document> {
   }
 
   async getAll(): Promise<T[]> {
-    return this.model.find().exec();
+    return this.model.find();
   }
 
   async getById(id: string): Promise<T | null> {
-    return this.model.findById(id).exec();
+    return this.model.findById(id);
   }
 
   async create(data: Partial<T>): Promise<T> {
@@ -21,11 +21,11 @@ class CrudRepository<T extends Document> {
   }
 
   async update(id: string, data: Partial<T>): Promise<T | null> {
-    return this.model.findByIdAndUpdate(id, data, { new: true }).exec();
+    return this.model.findByIdAndUpdate(id, data, { new: true });
   }
 
   async delete(id: string): Promise<T | null> {
-    return this.model.findByIdAndDelete(id).exec();
+    return this.model.findByIdAndDelete(id);
   }
 }
 export default CrudRepository;

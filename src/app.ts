@@ -10,11 +10,6 @@ import swaggerDocs from "./utils/swagger";
 
 const app = express();
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL);
-  next();
-});
-
 app.use(
   cors({
     origin: process.env.CLIENT_URL,
@@ -24,11 +19,6 @@ app.use(
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
-app.get("/", (_, res) => {
-  res.send("Welcome to Expenditure API");
-});
-
 app.use(cookieJwtAuth);
 app.use(deserializeUser);
 app.use("/api", router);
